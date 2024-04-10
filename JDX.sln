@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedLibrary", "SharedLibrary\SharedLibrary.shproj", "{012B4898-A9B6-4DE7-AD45-60FF58F19237}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelegationPlugins", "DelegationPlugins\DelegationPlugins.csproj", "{F61C0DCB-E9A8-40EB-B20A-A76219266F02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F61C0DCB-E9A8-40EB-B20A-A76219266F02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F61C0DCB-E9A8-40EB-B20A-A76219266F02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F61C0DCB-E9A8-40EB-B20A-A76219266F02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F61C0DCB-E9A8-40EB-B20A-A76219266F02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {740413AB-1F5C-46CB-9F03-A93401E170E9}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedLibrary\SharedLibrary.projitems*{012b4898-a9b6-4de7-ad45-60ff58f19237}*SharedItemsImports = 13
+		SharedLibrary\SharedLibrary.projitems*{f61c0dcb-e9a8-40eb-b20a-a76219266f02}*SharedItemsImports = 4
+	EndGlobalSection
+EndGlobal
