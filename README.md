@@ -1,6 +1,5 @@
 User Guide:
 install Delegation solution;
-install Delegation(Ribbon) solution;
 
 Custom tables: Delegation, Deletion Reassign Configuration, Delegation Reassign Record, Custom Trigger
 
