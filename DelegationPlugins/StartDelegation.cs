@@ -1,4 +1,4 @@
-﻿using DelegationPlugins.Entities;
+using DelegationPlugins.Entities;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using SharedLibrary;
@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 
 namespace DelegationPlugins
 {
-    public class StartDelegation:JdxPlugin
+    public class StartDelegation : JdxPlugin
     {
-        
-        
+
+
         public StartDelegation()
         {
             RegisterEvent(PipelineStage.PostOperation, PipelineMessage.Update, Delegation.EntityName, ExcuteSingle);
-            RegisterEvent(PipelineStage.PostOperation, PipelineMessage.Delete, CustomTrigger.EntityName, ExecuteMultiple);
+            RegisterEvent(PipelineStage.PostOperation, PipelineMessage.Delete, Customtrigger.EntityName, ExecuteMultiple);
         }
         /// <summary>
         /// Start Delegation individually once published and effective date hits.
@@ -38,12 +38,21 @@ namespace DelegationPlugins
             //status reason transit from Published to Delegating
             if (pre_status == 952700000 && post_status == 952700002)
             {
+                DelegationManager delegationManager = new DelegationManager(context);
+
                 Entity target = context.PluginExecutionContext.InputParameters["Target"] as Entity;
                 context.Trace($"Retrieved target: {target.Id}.");
                 Entity delegation = context.OrganizationService.Retrieve(Delegation.EntityName, target.Id, new ColumnSet(true));
                 context.Trace($"Retrieved delegation: {delegation.Id}.");
-                
-                DelegationUtils.StartDelegating(context, delegation);
+
+                OrganizationRequestCollection requests = delegationManager.CreateJoinTeamRequests(delegation);
+
+                requests.AddRange(delegationManager.CreateStartDelegationReassignRequests(delegation));
+                context.Trace($"ExcuteSingle: total request = {requests.Count}");
+                delegationManager.ExcuteMultiple(requests);
+            }
+            else {
+                context.Trace($"Exit with code 0.");
             }
         }
         /// <summary>
@@ -53,19 +62,29 @@ namespace DelegationPlugins
         /// <param name="context"></param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="InvalidPluginExecutionException"></exception>
-        public void ExecuteMultiple(LocalPluginContext context) 
+        public void ExecuteMultiple(LocalPluginContext context)
         {
             context.Trace($"Execute Multiple Process: Update status to start delegation.");
             #region find all pending delegations that effective date are on execution date.
-            List<Entity> delegations = context.OrganizationDataContext.CreateQuery(Delegation.EntityName).Where(d=>d.GetAttributeValue<DateTime>(Delegation.EffectiveDate).Equals(DateTime.Today) && d.GetAttributeValue<OptionSetValue>(Delegation.StatusReason).Value == 952700001).ToList();
+            List<Entity> delegations = context.OrganizationDataContext.CreateQuery(Delegation.EntityName).Where(d => d.GetAttributeValue<DateTime>(Delegation.Effectivedate).Equals(DateTime.Today) && d.GetAttributeValue<OptionSetValue>(Common.StatusCode).Value.Equals((int)Delegation.StatusCode_OptionSet.Pending)).ToList();
             #endregion
 
             //Conside heavy-duty
-            delegations.ForEach(delegation => DelegationUtils.StartDelegating(context, delegation));
+            DelegationManager delegationManager = new DelegationManager(context);
+            OrganizationRequestCollection requests = new OrganizationRequestCollection();
             
+           
+            delegations.ForEach(delegation =>
+            {
+                requests.AddRange(delegationManager.CreateJoinTeamRequests(delegation));
+                requests.AddRange(delegationManager.CreateStartDelegationReassignRequests(delegation));
+
+            });
+
+            delegationManager.ExcuteMultiple(requests);
 
         }
 
-        
+
     }
 }
