@@ -27,7 +27,7 @@ namespace DelegationPlugins.Entities
         /// <summary>Type: Lookup, RequiredLevel: SystemRequired, Targets: systemuser</summary>
         public const string Administrator = "administratorid";
         /// <summary>Type: String (Logical), RequiredLevel: None, MaxLength: 100, Format: Text</summary>
-        public const string  AdministratorName= "administratoridname";
+        public const string AdministratorName = "administratoridname";
         /// <summary>Type: String (Logical), RequiredLevel: None, MaxLength: 100, Format: Text</summary>
         public const string AdministratorYomiName = "administratoridyominame";
         /// <summary>Type: Lookup, RequiredLevel: SystemRequired, Targets: businessunit</summary>
