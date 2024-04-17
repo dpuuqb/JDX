@@ -1,4 +1,4 @@
-﻿using DelegationPlugins.Entities;
+using DelegationPlugins.Entities;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Messages;
@@ -74,16 +74,22 @@ namespace DelegationPlugins
             OptionSetValue statusReason = delegation.GetAttributeValue<OptionSetValue>(Common.StatusCode);
             
             string[] result = GetAssociatingTeamsByDelegation(delegation);
-            
+            string[]  allFutureDelegatingTeams = GetAllFutureDelegatingTeamsByUser(delegation.GetAttributeValue<EntityReference>(Delegation.Delegating).Id);
+           
+
             if (result is null) return organizationRequests;
             else 
             {
+
                 EntityCollection actualOwningTeams = GetAssociatedTeamsByUser(newOwnerId);
 
+                // for each team in the associated teammembership of current delegating user
+                // remove the delegating user from the team if team Id is matching and not belongs to other delegating teams that are going to be removed in the future.
                 foreach (string teamName in result)
                 {
                     Entity team = svc.CreateQuery(Team.EntityName).Where(t => t.GetAttributeValue<string>(Team.PrimaryName).Equals(teamName)).First();
-                    if (actualOwningTeams.Entities.Any(t => t.Id.Equals(team.Id))) organizationRequests.Add(RequestBuilder.BuildRemoveMembersTeamRequest(team.Id, newOwnerId));
+                    
+                    if (actualOwningTeams.Entities.Any(t => t.Id.Equals(team.Id) && allFutureDelegatingTeams.Any(s=>s.Contains(t.GetAttributeValue<string>(Team.PrimaryName))))) organizationRequests.Add(RequestBuilder.BuildRemoveMembersTeamRequest(team.Id, newOwnerId));
                 }
 
                 //expiry triggered
@@ -276,6 +282,17 @@ namespace DelegationPlugins
             }
 
 
+        }
+        public string[] GetAllFutureDelegatingTeamsByUser(Guid userId)
+        {
+            return svc.CreateQuery(Delegation.EntityName)
+                    .Where(d => d.GetAttributeValue<OptionSetValue>(Common.StatusCode).Value.Equals((int)Delegation.StatusCode_OptionSet.Delegating) 
+                                && d.GetAttributeValue<EntityReference>(Delegation.Delegating).Id.Equals(userId)
+                                && d.GetAttributeValue<DateTime>(Delegation.Expirydate) > DateTime.Today)
+                    .Select(d=>d.GetAttributeValue<string>(Delegation.TeamS))
+                    .ToArray();
+
+            
         }
         /// <summary>
         /// Allocately execute multiple requests.
