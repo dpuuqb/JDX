@@ -88,8 +88,15 @@ namespace DelegationPlugins
                 foreach (string teamName in result)
                 {
                     Entity team = svc.CreateQuery(Team.EntityName).Where(t => t.GetAttributeValue<string>(Team.PrimaryName).Equals(teamName)).First();
-                    
-                    if (actualOwningTeams.Entities.Any(t => t.Id.Equals(team.Id) && allFutureDelegatingTeams.Any(s=>s.Contains(t.GetAttributeValue<string>(Team.PrimaryName))))) organizationRequests.Add(RequestBuilder.BuildRemoveMembersTeamRequest(team.Id, newOwnerId));
+
+                    if (allFutureDelegatingTeams != null && allFutureDelegatingTeams.Length > 0)
+                    {
+                        if (actualOwningTeams.Entities.Any(t => t.Id.Equals(team.Id) && allFutureDelegatingTeams.Any(s => s.Contains(t.GetAttributeValue<string>(Team.PrimaryName))))) organizationRequests.Add(RequestBuilder.BuildRemoveMembersTeamRequest(team.Id, newOwnerId));
+
+                    }
+                    else {
+                        if (actualOwningTeams.Entities.Any(t => t.Id.Equals(team.Id))) organizationRequests.Add(RequestBuilder.BuildRemoveMembersTeamRequest(team.Id, newOwnerId));
+                    }
                 }
 
                 //expiry triggered
