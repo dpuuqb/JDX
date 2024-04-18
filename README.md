@@ -5,7 +5,7 @@
 	A basic solution for user delegation logic that can associate team members and conditional reassign owned records in a designated date range.
 <h2>Delegation UML Diagram</h2>
 
-<img src="https://github.com/dpuuqb/JDX/assets/106572740/36ce9958-7a7d-47e3-9b4b-a3f91571b087" alt="UML">
+<img src="https://github.com/dpuuqb/JDX/assets/106572740/36ce9958-7a7d-47e3-9b4b-a3f91571b087" alt="Delegation UML Diagram">
 
 
 <h2>Tables</h2>
@@ -17,7 +17,8 @@
 </ul>
 
 <h2>Delegation Status Transitions</h2>
-		
+<img src="https://github.com/dpuuqb/JDX/assets/106572740/74dd1bcf-d556-482b-854a-059f24d6c5e4" alt="Delegation Status Transitions">
+	
 1. create delegation reassign config records (add xml filter if required)
 2. create custom trigger = Delegation Job
 3. create daily system deletion job (recurrence by 1 day)
