@@ -91,7 +91,7 @@ namespace DelegationPlugins
 
                     if (allFutureDelegatingTeams != null && allFutureDelegatingTeams.Length > 0)
                     {
-                        if (actualOwningTeams.Entities.Any(t => t.Id.Equals(team.Id) && allFutureDelegatingTeams.Any(s => s.Contains(t.GetAttributeValue<string>(Team.PrimaryName))))) organizationRequests.Add(RequestBuilder.BuildRemoveMembersTeamRequest(team.Id, newOwnerId));
+                        if (actualOwningTeams.Entities.Any(t => t.Id.Equals(team.Id) && !allFutureDelegatingTeams.Any(s => s.Contains(t.GetAttributeValue<string>(Team.PrimaryName))))) organizationRequests.Add(RequestBuilder.BuildRemoveMembersTeamRequest(team.Id, newOwnerId));
 
                     }
                     else {
