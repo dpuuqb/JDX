@@ -19,19 +19,6 @@
 <h2>Delegation Status Transitions</h2>
 <img src="https://github.com/dpuuqb/JDX/assets/106572740/74dd1bcf-d556-482b-854a-059f24d6c5e4" alt="Delegation Status Transitions">
 	
-1. create delegation reassign config records (add xml filter if required)
-2. create custom trigger = Delegation Job
-3. create daily system deletion job (recurrence by 1 day)
-
-Solution including:
-		1. one JavaScript
-		2. two Workflow
-		3. 3 plugin steps 	
-				a. preValidate - create of delegation
-				b. publish to start delegation - update status of delegation
-				c. custom trigger pending deledation once effective date arrive
-				d. cancel to end delegation - update status of delegation
-				e. custom trigger delegating delegation once expiry date arrive
-
-
-Email Notification (Not implemented yet)
+<h2>Instruction</h2>
+	<h4>Install solution</h4>
+ 		
