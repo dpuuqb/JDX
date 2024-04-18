@@ -1,5 +1,4 @@
-User Guide:
-install Delegation solution;
+![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=csharp&logoColor=white)
 <img src="https://github.com/dpuuqb/JDX/assets/106572740/36ce9958-7a7d-47e3-9b4b-a3f91571b087" alt="UML">
 Custom tables: Delegation, Deletion Reassign Configuration, Delegation Reassign Record, Custom Trigger
 
