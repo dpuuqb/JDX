@@ -290,6 +290,12 @@ namespace DelegationPlugins
 
 
         }
+         /// <summary>
+        /// Additional logic: retrieve all delegating teams by one user in case of a team was associated from multiple delegations
+        /// followup with cancel/expiry logic where keeping this team until the latest delegation getting canceled or expired.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public string[] GetAllFutureDelegatingTeamsByUser(Guid userId)
         {
             return svc.CreateQuery(Delegation.EntityName)
