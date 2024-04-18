@@ -21,7 +21,7 @@
 	
 <h2>Instruction</h2>
 	<h4>Install solution</h4>
- 	<a href="[downloadURL](https://github.com/dpuuqb/JDX/blob/master/Delegation_1_0_0_0_managed.zip)" target="_blank" >Here!</a>
+ 	<a href="https://github.com/dpuuqb/JDX/blob/master/Delegation_1_0_0_0_managed.zip" target="_blank" >Here!</a>
  	[Delegation_1_0_0_0_managed.zip](https://dpuuqb.github.io/JDX/Delegation_1_0_0_0_managed.zip)
  	
  	
