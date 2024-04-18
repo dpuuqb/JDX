@@ -21,6 +21,6 @@
 	
 <h2>Instruction</h2>
 	<h4>Install solution</h4>
- 	<a he
- 	/Delegation_1_0_0_0_managed.zip,
+ 	<a href="/Delegation_1_0_0_0_managed.zip">Delegation_1_0_0_0_managed.zip</a>
+ 	
  		
