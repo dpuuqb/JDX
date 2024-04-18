@@ -20,8 +20,10 @@
 <img src="https://github.com/dpuuqb/JDX/assets/106572740/74dd1bcf-d556-482b-854a-059f24d6c5e4" alt="Delegation Status Transitions">
 	
 <h2>Instruction</h2>
-	<h4>Install solution</h4>
+	<h4>Download solution below</h4>
  	<a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0_managed.zip" target="_blank" >Delegation_1_0_0_0_managed.zip</a>
+  	<h4>Import solution in CRM organization</h4>
+   	<h4>Create a Custom Trigger record</h4>
  	
  	
  	
