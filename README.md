@@ -6,16 +6,17 @@
 <h2>Delegation UML Diagram</h2>
 
 <img src="https://github.com/dpuuqb/JDX/assets/106572740/36ce9958-7a7d-47e3-9b4b-a3f91571b087" alt="UML">
-Custom tables: Delegation, Deletion Reassign Configuration, Delegation Reassign Record, Custom Trigger
+
 
 <h2>Tables</h2>
 <ul>
 	<li>Delegation: used to create delegation logic as archivement. Giving user lookups and effective/expiry with associating appropriate configurations if required to reassign.</li>
 	<li>Delegation Reassign Configuration: Used to defined reassign entity type and set query filter.</li>
 	<li>Delegation Reassign Record: Used to store entity type name and Guid for reassigned record.</li>
+	<li>Custom Trigger: used to create system job lead that can be work with flows to trigger actions recurrently.</li>
 </ul>
 
-<h2>Delegation Life Circle</h2>
+<h2>Delegation Status Transitions</h2>
 		
 1. create delegation reassign config records (add xml filter if required)
 2. create custom trigger = Delegation Job
