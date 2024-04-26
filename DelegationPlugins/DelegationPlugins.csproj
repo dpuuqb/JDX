@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{029782A5-7572-49D6-AC6B-9224A6E211AB}</ProjectGuid>
+    <ProjectGuid>{F61C0DCB-E9A8-40EB-B20A-A76219266F02}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DelegationPlugins</RootNamespace>
