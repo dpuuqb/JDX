@@ -8,12 +8,17 @@ var DelegationRibbon= (function (DelegationRibbon) {
         //update status if possible
        
         primaryControl.getAttribute('statuscode').setValue(952700000);
-        primaryControl.data.save().then(()=>Xrm.Utility.closeProgressIndicator());
+        primaryControl.data.save().then(() => {
+            Xrm.Utility.closeProgressIndicator();
+            primaryControl.data.refresh();
+        });
         
 	}
     DelegationRibbon.EnablePublish = (primaryControl)=>{
         //customize enable rule for Publish
         //update mode && status is draft
+        //add Auto-Publish
+        if (primaryControl.getAttribute("jms_isautopublish").getValue()) return false;
         return primaryControl.ui.getFormType() != 1 && primaryControl.getAttribute('statuscode').getValue() == 1
     }
 
