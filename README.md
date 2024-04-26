@@ -21,10 +21,12 @@
 	
 <h2>Instruction</h2>
 	<h4>Download solution below</h4>
- 	<a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0_managed.zip" target="_blank" >Delegation_1_0_0_0_managed.zip</a>
+ 	<a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0.zip" target="_blank" >unmanaged.zip</a>
+ 	<a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0_managed.zip" target="_blank" >managed.zip</a>
   	<h4>Import solution in CRM organization</h4>
    	<h4>Create a Custom Trigger record</h4>
- 	
+ 	<p>Name: Delegation Job</p>
+  	<h4>Create daily scheduled job</h4>
  	
  	
  		
