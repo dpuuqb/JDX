@@ -4,10 +4,12 @@ using Microsoft.Xrm.Sdk.Query;
 using SharedLibrary;
 using SharedLibrary.Constants;
 using System;
+using static DelegationPlugins.Entities.SecurityRole;
 
 
 namespace DelegationPlugins
 {
+    
     public class UpdateDelegation : JdxPlugin
     {
         public UpdateDelegation()

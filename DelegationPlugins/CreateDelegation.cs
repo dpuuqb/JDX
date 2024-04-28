@@ -12,6 +12,11 @@ namespace DelegationPlugins
 {
     public class CreateDelegation : JdxPlugin
     {
+        /// <summary>
+        /// Register steps:
+        /// PreOperation on Create message trigger ExecutePreCreate implementing Auto-publish feature.
+        /// PostOperation on Create message trigger ExecutePostCreate
+        /// </summary>
         public CreateDelegation() 
         {
             RegisterEvent(PipelineStage.PreOperation, PipelineMessage.Create, Delegation.EntityLogicalName, ExecutePreCreate);
@@ -36,6 +41,10 @@ namespace DelegationPlugins
 
             
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public void ExecutePostCreate(LocalPluginContext context)
         {
             Entity target = context.PluginExecutionContext.InputParameters["Target"] as Entity;
@@ -49,20 +58,20 @@ namespace DelegationPlugins
             if (applyDefaultConfiguration)
             {
 
-                List<Entity> defaultConfigs = context.OrganizationDataContext.CreateQuery(DelegationReassignConfiguration.EntityLogicalName)
-                    .Where(d => ((DelegationReassignConfiguration)d).IsDefault.Equals(true)).ToList();
-
-
                 EntityReferenceCollection configRefs = new EntityReferenceCollection();
-                defaultConfigs.ForEach(c => configRefs.Add(c.ToEntityReference()));
-                AssociateRequest request = new AssociateRequest()
+                configRefs.AddRange(context.OrganizationDataContext.CreateQuery(DelegationReassignConfiguration.EntityLogicalName)
+                                                                .Cast<DelegationReassignConfiguration>()
+                                                                .Where(d => d.IsDefault.Equals(true))
+                                                                .Cast<EntityReference>()
+                                                                .ToArray());
+
+
+                context.OrganizationService.Execute(new AssociateRequest()
                 {
                     RelatedEntities = configRefs,
                     Relationship = new Relationship("jms_jms_delegationreassignconfiguration_jms_d"),
                     Target = new EntityReference(Delegation.EntityLogicalName, create.Id)
-                };
-
-                context.OrganizationService.Execute(request);
+                });
             }
 
             //Check Auto-Publish
