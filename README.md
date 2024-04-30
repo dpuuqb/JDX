@@ -28,8 +28,6 @@
 	<h3>Step 2: Create system job</h3>
  	<p>Create a record of entity Custom Trigger</p>
     	<img src="https://github.com/dpuuqb/JDX/assets/106572740/0f040230-ab66-4a08-bce0-ec8c9ee144bb" alt="Delegation App">
- 	
-  	
    	<p>Create a Bulk delete record over entity Custom Trigger</p>
    	<img src="https://github.com/dpuuqb/JDX/assets/106572740/6fbb821f-6fb8-41d3-a05d-24487e1ec629" alt="Delegation App">
    	<img src="https://github.com/dpuuqb/JDX/assets/106572740/a0e2eff3-cd4d-43f3-877e-be1910a75951" alt="Delegation App">
