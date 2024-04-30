@@ -18,17 +18,16 @@
 
 <h2>Delegation Status Transitions</h2>
 <img src="https://github.com/dpuuqb/JDX/assets/106572740/74dd1bcf-d556-482b-854a-059f24d6c5e4" alt="Delegation Status Transitions">
-	<br><br>
+	
 <h1>Use Guide</h1>
 	<h3>Step 1: Download solution below</h3>
  	<ul>
 		<li><a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0.zip" target="_blank" >unmanaged.zip</a></li>
 		<li><a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0_managed.zip" target="_blank" >managed.zip</a></li>
 	</ul>
- 	
- 	
- 	
-  	<h4>Choose Delegation App</h4>
+
+  	<h3>Choose App</h3>
+   	<p>From App navigation pane, choose Delegation App</p>
    	<img src="https://github.com/dpuuqb/JDX/assets/106572740/5e5da9d7-59b5-4b72-9572-0da0d96c4f16" alt="Delegation App">
    	<h4>Create a Custom Trigger record with name: Delegation Job</h4>
     	<img src="https://github.com/dpuuqb/JDX/assets/106572740/0f040230-ab66-4a08-bce0-ec8c9ee144bb" alt="Delegation App">
