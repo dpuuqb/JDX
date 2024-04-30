@@ -18,7 +18,7 @@
 
 <h2>Delegation Status Transitions</h2>
 <img src="https://github.com/dpuuqb/JDX/assets/106572740/74dd1bcf-d556-482b-854a-059f24d6c5e4" alt="Delegation Status Transitions">
-	
+	<br><br>
 <h1>Use Guide</h1>
 	<h3>Download solution below</h3>
  	<a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0.zip" target="_blank" >unmanaged.zip</a>
