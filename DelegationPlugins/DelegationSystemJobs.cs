@@ -1,4 +1,4 @@
-﻿using DelegationPlugins.Entities;
+using DelegationPlugins.Entities;
 using Microsoft.Xrm.Sdk;
 using SharedLibrary;
 using SharedLibrary.Constants;
@@ -26,30 +26,34 @@ namespace DelegationPlugins
 
             context.Trace($"Execute Multiple Process: Update status to start delegation.");
             #region find all pending delegations that effective date are on execution date.
-            List<Entity> delegationsStart = context.OrganizationDataContext.CreateQuery(Delegation.EntityLogicalName)
-                .Where(d => d.GetAttributeValue<DateTime>(Delegation.Fields.EffectiveDate).Equals(DateTime.Today) && d.GetAttributeValue<OptionSetValue>(Delegation.Fields.StatusReason).Value.Equals((int)Delegation.StatusReasonEnum.Pending))
+
+            List<Delegation> delegationsStart = context.OrganizationDataContext.CreateQuery(Delegation.EntityLogicalName)
+                .Cast<Delegation>()
+                .Where(d => d.StatusReason.Equals(Delegation.StatusReasonEnum.Pending) && d.EffectiveDate.Equals(DateTime.Today))
                 .ToList();
+             
             #endregion
 
-            
-           
+
+
             OrganizationRequestCollection requestsStart = new OrganizationRequestCollection();
 
 
             delegationsStart.ForEach(delegation =>
             {
-                var mode = (int)delegation.Attributes[Delegation.Fields.DelegationMode];
-                if (mode == (int)Delegation.DelegationModeEnum.Teambased)
+                
+                if (delegation.DelegationMode.Equals(Delegation.DelegationModeEnum.Teambased))
                 {
-                    requestsStart.AddRange(delegationManager.CreateJoinTeamRequests(delegation.ToEntity<Delegation>()));
+                    requestsStart.AddRange(delegationManager.CreateJoinTeamRequests(delegation));
                     
                 }
-                else if(mode == (int)Delegation.DelegationModeEnum.Rolebased)
+                else if(delegation.DelegationMode.Equals(Delegation.DelegationModeEnum.Rolebased))
                 {
-                    requestsStart.AddRange(delegationManager.CreateRoleAssociateRequests(delegation.ToEntity<Delegation>()));
+                    requestsStart.AddRange(delegationManager.CreateRoleAssociateRequests(delegation));
                    
                 }
-                requestsStart.AddRange(delegationManager.CreateStartDelegationReassignRequests(delegation.ToEntity<Delegation>()));
+                delegationManager.SendEmailFromTemplate(delegation, true);
+                requestsStart.AddRange(delegationManager.CreateStartDelegationReassignRequests(delegation));
 
             });
 
@@ -58,8 +62,9 @@ namespace DelegationPlugins
 
             context.Trace($"Execute multiple Processes: delegations expired.");
             #region find all delegating delegations that expiry date are on execution date.
-            List<Entity> delegationsEnd = context.OrganizationDataContext.CreateQuery(Delegation.EntityLogicalName)
-                .Where(d => d.GetAttributeValue<DateTime>(Delegation.Fields.EffectiveDate).Equals(DateTime.Today.AddDays(1)) && d.GetAttributeValue<OptionSetValue>(Delegation.Fields.StatusReason).Value.Equals((int)Delegation.StatusReasonEnum.Delegating))
+            List<Delegation> delegationsEnd = context.OrganizationDataContext.CreateQuery(Delegation.EntityLogicalName)
+                .Cast<Delegation>()
+                .Where(d => d.ExpiryDate.Equals(DateTime.Today.AddDays(-1)) && d.StatusReason.Equals((int)Delegation.StatusReasonEnum.Delegating))
                 .ToList();
             #endregion
 
@@ -69,20 +74,20 @@ namespace DelegationPlugins
 
             delegationsEnd.ForEach(delegation =>
             {
-                var mode = (int)delegation.Attributes[Delegation.Fields.DelegationMode];
+               
 
-                if (mode == (int)Delegation.DelegationModeEnum.Teambased)
+                if (delegation.DelegationMode.Equals(Delegation.DelegationModeEnum.Teambased))
                 {
-                    requestsEnd.AddRange(delegationManager.CreateLeaveTeamRequests(delegation.ToEntity<Delegation>(), Delegation.StatusReasonEnum.Expired));
+                    requestsEnd.AddRange(delegationManager.CreateLeaveTeamRequests(delegation, Delegation.StatusReasonEnum.Expired));
 
                 }
-                else if (mode == (int)Delegation.DelegationModeEnum.Rolebased)
+                else if (delegation.DelegationMode.Equals(Delegation.DelegationModeEnum.Rolebased))
                 {
-                    requestsEnd.AddRange(delegationManager.CreateRoleDisassociateRequests(delegation.ToEntity<Delegation>(), Delegation.StatusReasonEnum.Expired));
+                    requestsEnd.AddRange(delegationManager.CreateRoleDisassociateRequests(delegation, Delegation.StatusReasonEnum.Expired));
 
                 }
-
-                requestsEnd.AddRange(delegationManager.CreateEndDelegationReassignRequests(delegation.ToEntity<Delegation>()));
+                delegationManager.SendEmailFromTemplate(delegation, false);
+                requestsEnd.AddRange(delegationManager.CreateEndDelegationReassignRequests(delegation));
 
             });
 
