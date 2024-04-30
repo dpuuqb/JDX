@@ -32,12 +32,3 @@
    	<img src="https://github.com/dpuuqb/JDX/assets/106572740/6fbb821f-6fb8-41d3-a05d-24487e1ec629" alt="Delegation App">
    	<img src="https://github.com/dpuuqb/JDX/assets/106572740/a0e2eff3-cd4d-43f3-877e-be1910a75951" alt="Delegation App">
 
-    
- 	<h3>Step 3: Configure delegation reassignment</h3>
-  	<img src="https://github.com/dpuuqb/JDX/assets/106572740/714baad7-2ee1-443c-b0ec-e1b7ea336eba" alt="Delegation App">
- 	
-	 <ul>
-		 <li>Entity Name: A entity logical name that will be reassigned owner while delgating.</li>
-		 <li>Is Default: A indicator wheather apply to global.</li>
-		 <li>Filter: A piece of query filter in a format of XML that customize reassignment.</li>
-	 </ul>
