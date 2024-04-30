@@ -28,7 +28,7 @@
    	<h4>Create a Custom Trigger record with name: Delegation Job</h4>
     	<img src="https://github.com/dpuuqb/JDX/assets/106572740/0f040230-ab66-4a08-bce0-ec8c9ee144bb" alt="Delegation App">
  	
-  	<h4>Create daily scheduled job</h4>
+  	<h4> Create daily scheduled job </h4>
  	
  	
  		
