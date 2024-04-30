@@ -26,10 +26,11 @@
 		<li><a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0_managed.zip" target="_blank" >managed.zip</a></li>
 	</ul>
 	<h3>Step 2: Choose App</h3>
-  	
-   	<p>From App navigation pane, choose Delegation App</p>
+ 	<p>
+		From App navigation pane, choose Delegation App
     
    	<img src="https://github.com/dpuuqb/JDX/assets/106572740/5e5da9d7-59b5-4b72-9572-0da0d96c4f16" alt="Delegation App">
+    	</p>
    	<h4>Create a Custom Trigger record with name: Delegation Job</h4>
     	<img src="https://github.com/dpuuqb/JDX/assets/106572740/0f040230-ab66-4a08-bce0-ec8c9ee144bb" alt="Delegation App">
  	
