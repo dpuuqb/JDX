@@ -38,3 +38,5 @@
 		 <li>Is Default: A indicator wheather apply to global.</li>
 		 <li>Filter: A piece of query filter in a format of XML that customize reassignment.</li>
 	 </ul>
+  <h3>Step 4: Delegation App</h3>
+  <img src="https://github.com/dpuuqb/JDX/assets/106572740/5e5da9d7-59b5-4b72-9572-0da0d96c4f16" alt="Delegation App">
