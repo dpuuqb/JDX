@@ -74,43 +74,33 @@ namespace DelegationPlugins
                 });
             }
 
-            //Check Auto-Publish
-
-            if (context.PluginExecutionContext.SharedVariables.Contains("AutoPublished"))
+            //Check Status Reason 
+            OptionSetValue statusReason = create.StatusReason.ToOptionSetValue();
+            if (statusReason.Equals(Delegation.StatusReasonEnum.Published.ToOptionSetValue()))
             {
-                bool IsAutoPublished = (bool)context.PluginExecutionContext.SharedVariables["AutoPublished"];
+                DateTime effectiveDate = create.EffectiveDate ?? DateTime.Today;
 
-                if (IsAutoPublished && create.StatusReason != null && create.StatusReason == Delegation.StatusReasonEnum.Published)
+                context.Trace($"[ExecutePostCreate] Status Reason: {Delegation.StatusReasonEnum.Published} -- Start to analysis Effective Date {effectiveDate.ToLocalTime()}.");
+                Delegation update = new Delegation
                 {
-
-                    DateTime effectiveDate = create.EffectiveDate ?? DateTime.Today;
-
-                    context.Trace($"[ExecutePostCreate] Status Reason: {Delegation.StatusReasonEnum.Published} -- Start to analysis Effective Date {effectiveDate.ToLocalTime()}.");
-                    Delegation update = new Delegation
-                    {
-                        Id = create.Id,
-                        StatusReason = Delegation.StatusReasonEnum.Published
-                    };
-
-                    if (effectiveDate > DateTime.Today)
-                    {
-                        context.Trace($"update status reason to: {Delegation.StatusReasonEnum.Pending}.");
-                        update.StatusReason = Delegation.StatusReasonEnum.Pending;
-                    }
-                    else
-                    {
-                        context.Trace($"update status reason to: {Delegation.StatusReasonEnum.Delegating}.");
-                        update.StatusReason =Delegation.StatusReasonEnum.Delegating;
-                    }
-
-                    context.OrganizationService.Update(update);
-
+                    Id = create.Id,
+                    StatusReason = Delegation.StatusReasonEnum.Published
                 };
-                    
 
+                if (effectiveDate > DateTime.Today)
+                {
+                    context.Trace($"update status reason to: {Delegation.StatusReasonEnum.Pending}.");
+                    update.StatusReason = Delegation.StatusReasonEnum.Pending;
+                }
+                else
+                {
+                    context.Trace($"update status reason to: {Delegation.StatusReasonEnum.Delegating}.");
+                    update.StatusReason = Delegation.StatusReasonEnum.Delegating;
+                }
 
+                context.OrganizationService.Update(update);
             }
-            
+
 
         }
 

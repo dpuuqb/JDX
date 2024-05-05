@@ -4,6 +4,7 @@ using Microsoft.Xrm.Sdk.Query;
 using SharedLibrary;
 using SharedLibrary.Constants;
 using System;
+using System.Linq;
 using static DelegationPlugins.Entities.SecurityRole;
 
 
@@ -28,6 +29,7 @@ namespace DelegationPlugins
             Entity target = context.PluginExecutionContext.InputParameters["Target"] as Entity;
 
             Delegation update = target.ToEntity<Delegation>();
+            Delegation delegation = context.OrganizationService.Retrieve(Delegation.EntityLogicalName, update.Id, new ColumnSet(true)).ToEntity<Delegation>();
             Delegation preDelegation = context.PreImage.ToEntity<Delegation>();
             
             //condition: update target fields contains status reason and it transits from Draft to Published.
@@ -35,7 +37,7 @@ namespace DelegationPlugins
             {
 
                 context.Trace("[ExecutePreUpdate]: Published manually from button.");
-                DateTime effectiveDate = preDelegation.EffectiveDate ?? DateTime.MinValue;
+                DateTime effectiveDate = delegation.EffectiveDate ?? DateTime.MinValue;
 
                 context.Trace($"[ExecutePreUpdate] Status Reason: {Delegation.StatusReasonEnum.Published} -- Start to analysis Effective Date {effectiveDate.ToLocalTime()}.");
 
@@ -87,7 +89,7 @@ namespace DelegationPlugins
                     delegationManager.ExcuteMultiple(organizationRequests);
                 }
                 
-
+                if(delegation.SendNotifications == true)
                 delegationManager.SendEmailFromTemplate(delegation, true);
             }
             else if (update.Contains(Delegation.Fields.StatusReason) && postDelegation.StatusReason == Delegation.StatusReasonEnum.Canceled && preDelegation.StatusReason != Delegation.StatusReasonEnum.Canceled)
@@ -111,8 +113,8 @@ namespace DelegationPlugins
                 }
 
 
-                
-                delegationManager.SendEmailFromTemplate(delegation, false);
+                if (delegation.SendNotifications == true)
+                    delegationManager.SendEmailFromTemplate(delegation, false);
             }
             else
             {
