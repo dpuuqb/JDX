@@ -89,7 +89,7 @@ namespace DelegationPlugins
                     delegationManager.ExcuteMultiple(organizationRequests);
                 }
                 
-
+                if(delegation.SendNotifications == true)
                 delegationManager.SendEmailFromTemplate(delegation, true);
             }
             else if (update.Contains(Delegation.Fields.StatusReason) && postDelegation.StatusReason == Delegation.StatusReasonEnum.Canceled && preDelegation.StatusReason != Delegation.StatusReasonEnum.Canceled)
@@ -113,8 +113,8 @@ namespace DelegationPlugins
                 }
 
 
-                
-                delegationManager.SendEmailFromTemplate(delegation, false);
+                if (delegation.SendNotifications == true)
+                    delegationManager.SendEmailFromTemplate(delegation, false);
             }
             else
             {

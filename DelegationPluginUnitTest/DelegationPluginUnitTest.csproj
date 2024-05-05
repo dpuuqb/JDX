@@ -126,10 +126,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBuilder.cs" />
     <Compile Include="FakeXrmEasyPipelineTestsBase.cs" />
     <Compile Include="FakeXrmEasyTestsBase.cs" />
     <Compile Include="CreateDelegationTestWithSimulation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DelegationSystemJobsTestWithSimulation.cs" />
     <Compile Include="UpdateDelegationTestWithSimulation.cs" />
   </ItemGroup>
   <ItemGroup>

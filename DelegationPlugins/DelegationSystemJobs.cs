@@ -26,8 +26,9 @@ namespace DelegationPlugins
 
             context.Trace($"Execute Multiple Process: Update status to start delegation.");
             #region find all pending delegations that effective date are on execution date.
-            List<Entity> delegationsStart = context.OrganizationDataContext.CreateQuery(Delegation.EntityLogicalName)
-                .Where(d => d.GetAttributeValue<DateTime>(Delegation.Fields.EffectiveDate).Equals(DateTime.Today) && d.GetAttributeValue<OptionSetValue>(Delegation.Fields.StatusReason).Value.Equals((int)Delegation.StatusReasonEnum.Pending))
+            List<Delegation> delegationsStart = context.OrganizationDataContext.CreateQuery(Delegation.EntityLogicalName)
+                .Cast<Delegation>()
+                .Where(d => d.EffectiveDate.Equals(DateTime.Today) && d.StatusReason.Equals(Delegation.StatusReasonEnum.Pending))
                 .ToList();
             #endregion
 
@@ -51,6 +52,8 @@ namespace DelegationPlugins
                 }
                 requestsStart.AddRange(delegationManager.CreateStartDelegationReassignRequests(delegation.ToEntity<Delegation>()));
 
+                if (delegation.SendNotifications == true)
+                    delegationManager.SendEmailFromTemplate(delegation, true);
             });
 
             delegationManager.ExcuteMultiple(requestsStart);
@@ -58,8 +61,9 @@ namespace DelegationPlugins
 
             context.Trace($"Execute multiple Processes: delegations expired.");
             #region find all delegating delegations that expiry date are on execution date.
-            List<Entity> delegationsEnd = context.OrganizationDataContext.CreateQuery(Delegation.EntityLogicalName)
-                .Where(d => d.GetAttributeValue<DateTime>(Delegation.Fields.EffectiveDate).Equals(DateTime.Today.AddDays(1)) && d.GetAttributeValue<OptionSetValue>(Delegation.Fields.StatusReason).Value.Equals((int)Delegation.StatusReasonEnum.Delegating))
+            List<Delegation> delegationsEnd = context.OrganizationDataContext.CreateQuery(Delegation.EntityLogicalName)
+                .Cast<Delegation>()
+                .Where(d => d.ExpiryDate.Equals(DateTime.Today.AddDays(-1)) && d.GetAttributeValue<OptionSetValue>(Delegation.Fields.StatusReason).Value.Equals((int)Delegation.StatusReasonEnum.Delegating))
                 .ToList();
             #endregion
 
@@ -84,6 +88,8 @@ namespace DelegationPlugins
 
                 requestsEnd.AddRange(delegationManager.CreateEndDelegationReassignRequests(delegation.ToEntity<Delegation>()));
 
+                if (delegation.SendNotifications == true)
+                    delegationManager.SendEmailFromTemplate(delegation, false);
             });
 
             delegationManager.ExcuteMultiple(requestsEnd);

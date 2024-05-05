@@ -40,13 +40,21 @@ namespace DelegationPlugins
 
 
         }
+        /// <summary>
+        /// A user must be delegated only onece at a time. Also, the user must not in a state of delegating other users.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="userId"></param>
+        /// <exception cref="ArgumentException"></exception>
         public void IsDelegatedUserValid(LocalPluginContext context, Guid userId)
         {
             int count = context.OrganizationDataContext.CreateQuery(Delegation.EntityLogicalName)
-                .Where(d => d.GetAttributeValue<EntityReference>(Delegation.Fields.DelegatedUser).Id.Equals(userId) 
-                && (d.GetAttributeValue<OptionSetValue>(Delegation.Fields.StatusReason).Value.Equals((int)Delegation.StatusReasonEnum.Pending) 
-                || d.GetAttributeValue<OptionSetValue>(Delegation.Fields.StatusReason).Value.Equals((int)Delegation.StatusReasonEnum.Delegating))).ToList().Count();
+                .Cast<Delegation>()
+                .Where(d =>(d.DelegatedUser.Equals(userId)|| d.DelegatingUser.Equals(userId)) && (d.StatusReason.Equals(Delegation.StatusReasonEnum.Pending) || d.StatusReason.Equals(Delegation.StatusReasonEnum.Delegating)))
+                .ToList()
+                .Count();
             if (count > 0) 
+
             {
                 throw new ArgumentException("Delegated User has already had active delegations!");
             }
