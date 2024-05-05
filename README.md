@@ -19,16 +19,24 @@
 <h2>Delegation Status Transitions</h2>
 <img src="https://github.com/dpuuqb/JDX/assets/106572740/74dd1bcf-d556-482b-854a-059f24d6c5e4" alt="Delegation Status Transitions">
 	
-<h2>Instruction</h2>
-	<h4>Download solution below</h4>
- 	<a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0.zip" target="_blank" >unmanaged.zip</a>
- 	<a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0_managed.zip" target="_blank" >managed.zip</a>
-  	<h4>Choose Delegation App</h4>
-   	<img src="https://github.com/dpuuqb/JDX/assets/106572740/5e5da9d7-59b5-4b72-9572-0da0d96c4f16" alt="Delegation App">
-   	<h4>Create a Custom Trigger record with name: Delegation Job</h4>
+<h1>Use Guide</h1>
+	<h3>Step 1: Download solution below</h3>
+ 	<ul>
+		<li><a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0.zip" target="_blank" >unmanaged.zip</a></li>
+		<li><a href="https://github.com/dpuuqb/JDX/raw/master/Delegation_1_0_0_0_managed.zip" target="_blank" >managed.zip</a></li>
+	</ul>
+	<h3>Step 2: Create system job</h3>
+ 	<p>Create a record of entity Custom Trigger</p>
     	<img src="https://github.com/dpuuqb/JDX/assets/106572740/0f040230-ab66-4a08-bce0-ec8c9ee144bb" alt="Delegation App">
- 	
-  	<h4>Create daily scheduled job</h4>
- 	
- 	
- 		
+   	<p>Create a Bulk delete record over entity Custom Trigger</p>
+   	<img src="https://github.com/dpuuqb/JDX/assets/106572740/6fbb821f-6fb8-41d3-a05d-24487e1ec629" alt="Delegation App">
+   	<img src="https://github.com/dpuuqb/JDX/assets/106572740/a0e2eff3-cd4d-43f3-877e-be1910a75951" alt="Delegation App">
+    <h3>Step 3: Configure delegation reassignment</h3>
+  	<img src="https://github.com/dpuuqb/JDX/assets/106572740/714baad7-2ee1-443c-b0ec-e1b7ea336eba" alt="Delegation App">
+ 	<ul>
+		 <li>Entity Name: A entity logical name that will be reassigned owner while delgating.</li>
+		 <li>Is Default: A indicator wheather apply to global.</li>
+		 <li>Filter: A piece of query filter in a format of XML that customize reassignment.</li>
+	 </ul>
+  <h3>Step 4: Delegation App</h3>
+  <img src="https://github.com/dpuuqb/JDX/assets/106572740/5e5da9d7-59b5-4b72-9572-0da0d96c4f16" alt="Delegation App">
